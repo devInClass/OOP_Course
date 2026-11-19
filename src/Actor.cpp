@@ -1,10 +1,21 @@
 #pragma once
 #include "Actor.h"
-#include "raylib.h"
 
-Actor::Actor() : x_(400.0f), y_(300.0f), radius_(20.0f), isMovingRight_(true) {}
 
-Actor::Actor(float x, float y, float radius) : x_(x), y_(y), radius_(radius), isMovingRight_(true) {}
+Actor::Actor() : position_(Vec2{100, 100}), 
+	radius_(20.0f),
+	scale_(1.0f),
+	color_(RED),
+	rotation_(0.0f),
+	isMovingRight_(true) {}
+
+Actor::Actor(Vec2 position, float radius, float scale, Color color, float rotation) : 
+	position_(position), 
+	radius_(radius), 
+	scale_(scale), 
+	color_(color), 
+	rotation_(rotation),
+	isMovingRight_(true) { }
 
 Actor::~Actor() {}
 
@@ -14,15 +25,15 @@ void Actor::Update(float deltaTime, float speed) {
 	float speed_ = speed * deltaTime; // units per second
 
 	if (isMovingRight_) {
-		x_ += speed_;
+		position_.x += speed_;
 	} else {
-		x_ -= speed_;
+		position_.x -= speed_;
 	}
 	
 
-	if (x_ + radius_ >= static_cast<float>(GetScreenWidth())) { // Wrap around if it goes off screen
+	if (position_.x + radius_ >= static_cast<float>(GetScreenWidth())) { // Wrap around if it goes off screen
 		isMovingRight_ = false;
-	} else if (x_ - radius_ <= 0.0f) {
+	} else if (position_.x - radius_ <= 0.0f) {
 		isMovingRight_ = true;
 	}
 
@@ -30,5 +41,5 @@ void Actor::Update(float deltaTime, float speed) {
 }
 
 void Actor::Draw() {
-	DrawCircle(static_cast<int>(x_), static_cast<int>(y_), radius_, RED); // Draw a red circle representing the actor
+	DrawCircle(static_cast<int>(position_.x), static_cast<int>(position_.y), radius_, RED); // Draw a red circle representing the actor
 }

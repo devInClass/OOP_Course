@@ -18,7 +18,11 @@ int main(void)
 	std::vector<Actor> actors{10};
 
 	for (int i = 0; i < actors.size(); i++) {
-		actors[i] = Actor(0.0f + radius * (2 * i + 1), 0.0f + radius * (2 * i + 1), radius);
+		actors[i] = Actor({ 0.0f + radius * (2 * i + 1), 0.0f + radius * (2 * i + 1) }, 
+			radius, 
+			1.0f, 
+			RED, 
+			0.0f);
 	}
 
 	float speed = 200.0f; // units per second
